@@ -5,7 +5,8 @@
         :class="`${classes['base']} ${classes[variant]}`"
     >{{ text }}</router-link>
     <button 
-        v-else @click="handleClick" 
+        v-else 
+        @click="handleClick" 
         :class="computedClass"
         :active="isActive"
     >
@@ -52,7 +53,7 @@ export default {
     data(){
         return{
             classes: {
-                base: "w-[141px] rounded-[60px] py-3 px-5 font-semibold text-white flex justify-center items-center",
+                base: "w-[141px] rounded-[60px] py-2 px-5 font-semibold text-white flex justify-center items-center text-lg",
                 primary: "bg-[#f22539] hover:bg-[#c00e20]",
                 secondary: "bg-[#bfbfbf] hover:bg-[#7E7B7B]"
             }
