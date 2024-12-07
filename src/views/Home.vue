@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center">
+  <div class="flex flex-col items-center max-w-xl mx-auto">
     <form>
       <input placeholder="Search" class="border" />
     </form>
