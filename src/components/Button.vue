@@ -2,7 +2,7 @@
     <router-link 
         v-if="to" 
         :to="to" 
-        :class="`${classes['base']} ${classes[variant]}`"
+        :class="computedClass"
     >{{ text }}</router-link>
     <button 
         v-else 
@@ -53,16 +53,16 @@ export default {
                 base: "font-semibold text-white flex justify-center items-center text-lg",
                 primary: "bg-[#f22539] hover:bg-[#c00e20]",
                 secondary: "bg-[#bfbfbf] hover:bg-[#7E7B7B]",
-                widthText: "py-2 px-5 w-[141px] rounded-[60px] gap-2",
+                widthText: "py-2 px-5 min-w-[141px] rounded-[60px] gap-2",
                 iconOnlyWidth: "p-2 w-auto h-auto rounded-full"
             }
         }
     },
     computed: {
         computedClass(){
-            let sizeClass = this.text
-                ? this.classes.widthText
-                : this.classes.iconOnlyWidth
+            let sizeClass = this.text && this.text.length > 0
+            ? this.classes.widthText
+            : this.classes.iconOnlyWidth;
             let baseClass = `${this.classes.base} ${sizeClass}`;
             if(this.icon){
                 return this.isActive 
@@ -71,6 +71,6 @@ export default {
             }
             return `${baseClass} ${this.classes[this.variant]}`;
         },
-    },
+    }
 }
 </script>
