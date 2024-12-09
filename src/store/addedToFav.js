@@ -7,10 +7,13 @@ export const useAddedToFav = defineStore("addedToFav", {
         }
     },
     actions: {
-        setNewFav( name ){
-            this.favorites = [...this.favorites, name];
-            console.log(`Agregado a favoritos: ${name}`)
-            console.log("los agregados a favoritos son: ", this.favorites)
+        toggleFavorite( newPokemon ) {
+            const isFavorite = this.favorites.includes(newPokemon);
+            if (isFavorite){
+                this.favorites = this.favorites.filter(pokemon => pokemon.name !== newPokemon.name);
+            } else {
+                this.favorites = [...this.favorites, newPokemon];
+            }
         }
     }
 })

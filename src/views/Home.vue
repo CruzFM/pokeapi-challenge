@@ -26,7 +26,7 @@
         </p>
         <Button
           :icon="isFavorite(element.name) ? starFilledIcon : starIcon"
-          :handleClick="() => addedToFavStore.setNewFav(element)"
+          :handleClick="() => addedToFavStore.toggleFavorite(element)"
           class="bg-slate-200"
         />
       </div>
