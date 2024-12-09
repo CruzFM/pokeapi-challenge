@@ -26,7 +26,7 @@
         </p>
         <Button
           :icon="starIcon"
-          :handleClick="() => console.log('Bien ferchu!')"
+          :handleClick="() => addedToFavStore.setNewFav(element.name)"
           class="bg-slate-200"
         />
       </div>
@@ -60,12 +60,14 @@
   </div>
 </template>
 <script>
-import Button from "@/components/Button.vue";
-import starIcon from "@/assets/icons/star-icon.png";
-import listIcon from "@/assets/icons/list-icon.png";
+import { mapStores } from "pinia";
+import { useAddedToFav } from "../store/addedToFav";
 import EmptyResults from "@/components/EmptyResults.vue";
 import PokemonDetails from "@/components/PokemonDetails.vue";
 import Modal from "../components/Modal.vue";
+import Button from "@/components/Button.vue";
+import starIcon from "@/assets/icons/star-icon.png";
+import listIcon from "@/assets/icons/list-icon.png";
 
 export default {
   data() {
@@ -79,6 +81,9 @@ export default {
       isModalOpen: false,
       selectedElement: null,
     };
+  },
+  computed:{
+    ...mapStores(useAddedToFav)
   },
   components: {
     Button,

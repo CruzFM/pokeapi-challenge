@@ -7,8 +7,10 @@ export const useAddedToFav = defineStore("addedToFav", {
         }
     },
     actions: {
-        setNewFav( id ){
-            console.log(`Agregado a favoritos: ${id}`)
+        setNewFav( name ){
+            this.addedToFav = [...this.addedToFav, name];
+            console.log(`Agregado a favoritos: ${name}`)
+            console.log("los agregados a favoritos son: ", this.addedToFav)
         }
     }
 })
