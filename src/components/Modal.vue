@@ -51,7 +51,7 @@
          :handleClick="()=>console.log('compartir!')"
         />
         <Button 
-         :handleClick="()=>console.log('compartir!')"
+         :handleClick="()=> addedToFavStore.toggleFavorite(selectedElement)"
          :icon="isFavorite(selectedElement.name) ? starFilledIcon : starIcon"
          class="bg-slate-200"
         />
@@ -61,6 +61,8 @@
 </template>
 
 <script>
+import { mapStores } from "pinia";
+import { useAddedToFav } from "../store/addedToFav";
 import backgroundImage from "@/assets/background/modal-bg.png";
 import Button from "./Button.vue";
 import starIcon from "@/assets/icons/star-icon.png"
@@ -114,6 +116,9 @@ export default {
           this.pokemonDetails = null;
         });
     },
+  },
+  computed: {
+    ...mapStores(useAddedToFav)
   },
   mounted() {
     this.fetchPokemon(this.selectedElement?.name);
