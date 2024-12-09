@@ -36,6 +36,7 @@
         :isModalOpen="isModalOpen"
         :selectedElement="selectedElement"
         :searchPokemon="searchPokemon"
+        :isFavorite="isFavorite"
         @close="closeModal"
       />
     </div>
@@ -47,15 +48,16 @@
         :handleClick="() => setCurrentView('all')"
         :icon="listIcon"
         text="All"
-        :isActive="true"
-        class="px-20"
+        :isActive="currentView === 'all'"
+        class="!px-20"
       />
       <Button
         :handleClick="() => setCurrentView('favorites')"
         variant="secondary"
         :icon="starIcon"
+        :isActive="currentView === 'favorites'"
         text="Favorites"
-        class="px-16"
+        class="!px-16"
       />
     </footer>
   </div>
@@ -94,7 +96,6 @@ export default {
         : this.pokemonList
     },
     isFavorite(){
-
       return ( pokemon ) => this.addedToFavStore.favorites.some(fav => fav.name === pokemon)
     }
   },
@@ -115,7 +116,8 @@ export default {
         });
     },
     searchPokemon(pokemon) {
-      const endpoint = `${this.endpointBase}/${pokemon}`;
+      const trimmedValue = pokemon.trim()
+      const endpoint = `${this.endpointBase}/${trimmedValue}`;
       fetch(endpoint)
         .then((response) => {
           this.$router.push({

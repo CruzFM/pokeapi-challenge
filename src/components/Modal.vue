@@ -17,7 +17,7 @@
         />
         <Button 
             :icon="closeIcon"
-             class="absolute top-2 right-2 z-10 p-0"
+             class="absolute top-2 right-2 z-10 !p-0"
              @click="$emit('close')"
         />
       </div>
@@ -52,7 +52,7 @@
         />
         <Button 
          :handleClick="()=>console.log('compartir!')"
-         :icon="starIcon"
+         :icon="isFavorite(selectedElement.name) ? starFilledIcon : starIcon"
          class="bg-slate-200"
         />
       </div>
@@ -64,6 +64,7 @@
 import backgroundImage from "@/assets/background/modal-bg.png";
 import Button from "./Button.vue";
 import starIcon from "@/assets/icons/star-icon.png"
+import starFilledIcon from "@/assets/icons/star-filled-icon.png"
 import closeIcon from "@/assets/icons/close-btn.png"
 
 export default {
@@ -84,6 +85,7 @@ export default {
       type: Function,
       required: true,
     },
+    isFavorite: Function
   },
   data() {
     return {
@@ -91,6 +93,7 @@ export default {
       pokemonImage: null,
       backgroundImage,
       starIcon,
+      starFilledIcon,
       closeIcon
     };
   },
