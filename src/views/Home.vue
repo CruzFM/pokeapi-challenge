@@ -17,16 +17,16 @@
     <EmptyResults v-if="noResults" />
     <div v-else class="w-4/5 space-y-3 pt-2 pb-20">
       <div
-        v-for="element in pokemonList"
-        :key="element.name"
+        v-for="(element, index) in filteredList"
+        :key="`${element.name}-${index}`"
         class="border border-black flex justify-between items-center px-3 py-2 rounded-md bg-white"
       >
         <p class="text-xl capitalize" @click="openModal(element)">
           {{ element.name }}
         </p>
         <Button
-          :icon="starIcon"
-          :handleClick="() => addedToFavStore.setNewFav(element.name)"
+          :icon="isFavorite(element.name) ? starFilledIcon : starIcon"
+          :handleClick="() => addedToFavStore.setNewFav(element)"
           class="bg-slate-200"
         />
       </div>
@@ -39,18 +39,19 @@
         @close="closeModal"
       />
     </div>
+    
     <footer
       class="fixed bottom-0 left-0 w-full h-16 bg-white border flex justify-center items-center shadow-xl gap-5"
     >
       <Button
-        :handleClick="() => console.log('all')"
+        :handleClick="() => setCurrentView('all')"
         :icon="listIcon"
         text="All"
         :isActive="true"
         class="px-20"
       />
       <Button
-        :handleClick="() => console.log('favorites')"
+        :handleClick="() => setCurrentView('favorites')"
         variant="secondary"
         :icon="starIcon"
         text="Favorites"
@@ -67,12 +68,14 @@ import PokemonDetails from "@/components/PokemonDetails.vue";
 import Modal from "../components/Modal.vue";
 import Button from "@/components/Button.vue";
 import starIcon from "@/assets/icons/star-icon.png";
+import starFilledIcon from "@/assets/icons/star-filled-icon.png"
 import listIcon from "@/assets/icons/list-icon.png";
 
 export default {
   data() {
     return {
       starIcon,
+      starFilledIcon,
       listIcon,
       searchValue: "",
       pokemonList: [],
@@ -80,10 +83,20 @@ export default {
       noResults: false,
       isModalOpen: false,
       selectedElement: null,
+      currentView: "all"
     };
   },
   computed:{
-    ...mapStores(useAddedToFav)
+    ...mapStores(useAddedToFav),
+    filteredList(){
+      return this.currentView === "favorites"
+        ? this.addedToFavStore.favorites
+        : this.pokemonList
+    },
+    isFavorite(){
+
+      return ( pokemon ) => this.addedToFavStore.favorites.some(fav => fav.name === pokemon)
+    }
   },
   components: {
     Button,
@@ -134,6 +147,10 @@ export default {
     closeModal() {
       this.isModalOpen = false;
     },
+    setCurrentView( value ){
+      this.currentView = value;
+      console.log(this.currentView)
+    }
   },
   watch: {
     "$route.query.query": {

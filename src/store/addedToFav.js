@@ -3,14 +3,14 @@ import { defineStore } from "pinia";
 export const useAddedToFav = defineStore("addedToFav", {
     state: ()=>{
         return {
-            addedToFav: []
+            favorites: []
         }
     },
     actions: {
         setNewFav( name ){
-            this.addedToFav = [...this.addedToFav, name];
+            this.favorites = [...this.favorites, name];
             console.log(`Agregado a favoritos: ${name}`)
-            console.log("los agregados a favoritos son: ", this.addedToFav)
+            console.log("los agregados a favoritos son: ", this.favorites)
         }
     }
 })
