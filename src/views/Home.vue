@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col items-center max-w-xl mx-auto">
-    <form class="w-4/5 py-9" @submit.prevent="searchPokemon">
+    <form class="w-4/5 py-9" @submit.prevent="searchPokemon(searchValue)">
       <div class="relative w-full">
         <input
           placeholder="Search"
@@ -21,35 +21,51 @@
         :key="element.name"
         class="border border-black flex justify-between items-center px-3 py-2 rounded-md bg-white"
       >
-        <p class="text-xl">{{ element.name }}</p>
+        <p class="text-xl capitalize" @click="openModal(element)">
+          {{ element.name }}
+        </p>
         <Button
           :icon="starIcon"
           :handleClick="() => console.log('Bien ferchu!')"
+          class="bg-slate-200"
         />
       </div>
-      <footer
-        class="fixed bottom-0 left-0 w-full h-16 bg-white border flex justify-center items-center shadow-xl gap-5"
-      >
-        <Button :handleClick="()=> console.log('all')" :icon="listIcon"
-          text="All"
-          :isActive="true"
-          class="px-20"
-          />
-        <Button :handleClick="()=> console.log('favorites')" 
-          variant="secondary"
-          :icon="starIcon"
-          text="Favorites"
-          class=" px-16"
-          />
-      </footer>
+
+      <Modal
+        v-if="isModalOpen"
+        :isModalOpen="isModalOpen"
+        :selectedElement="selectedElement"
+        :searchPokemon="searchPokemon"
+        @close="closeModal"
+      />
     </div>
+    <footer
+      class="fixed bottom-0 left-0 w-full h-16 bg-white border flex justify-center items-center shadow-xl gap-5"
+    >
+      <Button
+        :handleClick="() => console.log('all')"
+        :icon="listIcon"
+        text="All"
+        :isActive="true"
+        class="px-20"
+      />
+      <Button
+        :handleClick="() => console.log('favorites')"
+        variant="secondary"
+        :icon="starIcon"
+        text="Favorites"
+        class="px-16"
+      />
+    </footer>
   </div>
 </template>
 <script>
 import Button from "@/components/Button.vue";
 import starIcon from "@/assets/icons/star-icon.png";
-import listIcon from "@/assets/icons/list-icon.png"
+import listIcon from "@/assets/icons/list-icon.png";
 import EmptyResults from "@/components/EmptyResults.vue";
+import PokemonDetails from "@/components/PokemonDetails.vue";
+import Modal from "../components/Modal.vue";
 
 export default {
   data() {
@@ -59,17 +75,20 @@ export default {
       searchValue: "",
       pokemonList: [],
       endpointBase: "https://pokeapi.co/api/v2/pokemon",
-      mainEndpoint: "https://pokeapi.co/api/v2/pokemon",
       noResults: false,
+      isModalOpen: false,
+      selectedElement: null,
     };
   },
   components: {
     Button,
     EmptyResults,
+    PokemonDetails,
+    Modal,
   },
   methods: {
     getAllPokemons() {
-      fetch(this.endpointBase)
+      fetch(`${this.endpointBase}?limit=10000&offset=0`)
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
@@ -77,13 +96,13 @@ export default {
           this.pokemonList = [...this.pokemonList, ...data.results];
         });
     },
-    searchPokemon() {
-      const endpoint = `${this.endpointBase}/${this.searchValue}`;
+    searchPokemon(pokemon) {
+      const endpoint = `${this.endpointBase}/${pokemon}`;
       fetch(endpoint)
         .then((response) => {
           this.$router.push({
             path: "/home",
-            query: { query: this.searchValue },
+            query: { query: pokemon },
           });
           if (!response.ok) {
             this.pokemonList = [];
@@ -94,7 +113,7 @@ export default {
         })
         .then((data) => {
           this.noResults = false;
-          if (this.searchValue.length > 0) {
+          if (pokemon.length > 0) {
             this.pokemonList = [data];
           } else {
             this.$router.push({ path: "/home" });
@@ -103,6 +122,13 @@ export default {
         })
         .catch((error) => console.error("Error searching data: ", error));
     },
+    openModal(element) {
+      this.selectedElement = element;
+      this.isModalOpen = true;
+    },
+    closeModal() {
+      this.isModalOpen = false;
+    },
   },
   watch: {
     "$route.query.query": {
@@ -110,7 +136,8 @@ export default {
       handler(newQuery) {
         if (newQuery) {
           this.searchValue = newQuery;
-          this.searchPokemon();
+          console.log(this.searchValue);
+          this.searchPokemon(this.searchValue);
         } else {
           (this.searchValue = ""), this.getAllPokemons();
         }
@@ -118,7 +145,9 @@ export default {
     },
   },
   mounted() {
-    this.getAllPokemons();
+    if (!this.$route.query.query) {
+      this.getAllPokemons();
+    }
   },
 };
 </script>
