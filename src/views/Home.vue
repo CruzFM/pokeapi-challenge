@@ -19,7 +19,7 @@
       <div
         v-for="(element, index) in filteredList"
         :key="`${element.name}-${index}`"
-        class="border border-black flex justify-between items-center px-3 py-2 rounded-md bg-white"
+        class="flex justify-between items-center px-3 py-2 rounded-md bg-white"
       >
         <p class="text-xl capitalize" @click="openModal(element)">
           {{ element.name }}
