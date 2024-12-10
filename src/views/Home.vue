@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center max-w-xl mx-auto">
+  <div class="min-h-screen flex flex-col items-center max-w-xl mx-auto">
     <form class="w-4/5 py-9" @submit.prevent="searchPokemon(searchValue)">
       <div class="relative w-full">
         <input
