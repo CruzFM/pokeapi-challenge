@@ -66,7 +66,6 @@
 import { mapStores } from "pinia";
 import { useAddedToFav } from "../store/addedToFav";
 import EmptyResults from "@/components/EmptyResults.vue";
-import PokemonDetails from "@/components/PokemonDetails.vue";
 import Modal from "../components/Modal.vue";
 import Button from "@/components/Button.vue";
 import starIcon from "@/assets/icons/star-icon.png";
@@ -102,7 +101,6 @@ export default {
   components: {
     Button,
     EmptyResults,
-    PokemonDetails,
     Modal,
   },
   methods: {

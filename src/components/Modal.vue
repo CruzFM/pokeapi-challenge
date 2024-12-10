@@ -48,7 +48,7 @@
         <Button 
          variant="primary"
          text="Share to my friends"
-         :handleClick="()=>console.log('compartir!')"
+         :handleClick="copyToClipboard"
         />
         <Button 
          :handleClick="()=> addedToFavStore.toggleFavorite(selectedElement)"
@@ -114,6 +114,23 @@ export default {
         .catch((error) => {
           console.error("Error fetching Pokémon:", error);
           this.pokemonDetails = null;
+        });
+    },
+    copyToClipboard() {
+      if (!this.pokemonDetails) {
+        console.log("No Pokémon info to share.");
+        return;
+      }
+      const { name, weight, height, types } = this.pokemonDetails;
+      const typeNames = types.map((type) => type.type.name).join(", ");
+      const textToCopy = `Name: ${name}, Weight: ${weight}, Height: ${height}, Types: ${typeNames}`;
+      
+      navigator.clipboard.writeText(textToCopy)
+        .then(() => {
+          console.log("Copied to clipboard!!!", textToCopy);
+        })
+        .catch((error) => {
+          console.error("Error copying to clpiboard!:", error);
         });
     },
   },
