@@ -1,10 +1,24 @@
-<script setup>
-import { RouterView } from 'vue-router'
-</script>
-
 <template>
   <div>
-    <RouterView />
+    <Loading v-if="isLoading" />
+    <RouterView v-else />
   </div>
-
 </template>
+
+<script>
+import { RouterView } from "vue-router";
+import Loading from "@/components/Loading.vue";
+import { loadingState } from "@/router"; 
+
+export default {
+  components: {
+    RouterView,
+    Loading
+  },
+  computed:{
+    isLoading(){
+      return loadingState.isLoading
+    }
+  },
+};
+</script>
