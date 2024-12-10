@@ -15,13 +15,13 @@
       </div>
     </form>
     <EmptyResults v-if="noResults" />
-    <div v-else class="w-4/5 space-y-3 pt-2 pb-20">
+    <div v-else class="w-4/5 space-y-3 pt-2 pb-20" >
       <div
         v-for="(element, index) in filteredList"
         :key="`${element.name}-${index}`"
         class="flex justify-between items-center px-3 py-2 rounded-md bg-white"
       >
-        <p class="text-xl capitalize" @click="openModal(element)">
+        <p class="text-xl capitalize cursor-pointer hover:underline" @click="openModal(element)">
           {{ element.name }}
         </p>
         <Button
