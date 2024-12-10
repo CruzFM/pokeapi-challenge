@@ -19,15 +19,17 @@
       <div
         v-for="(element, index) in filteredList"
         :key="`${element.name}-${index}`"
-        class="flex justify-between items-center px-3 py-2 rounded-md bg-white"
+        class="flex justify-between items-center px-3 py-2 rounded-md bg-white cursor-pointer"
+        @click="openModal(element)"
       >
-        <p class="text-xl capitalize cursor-pointer hover:underline" @click="openModal(element)">
+        <p class="text-xl capitalize cursor-pointer" >
           {{ element.name }}
         </p>
         <Button
           :icon="isFavorite(element.name) ? starFilledIcon : starIcon"
           :handleClick="() => addedToFavStore.toggleFavorite(element)"
           class="bg-slate-200"
+          @click.stop
         />
       </div>
 
