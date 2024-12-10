@@ -1,6 +1,7 @@
 <template>
   <div
     class="fixed inset-0 flex flex-col items-center justify-center bg-black bg-opacity-50 z-50"
+    @click="$emit('close')"
   >
     <div
       class="bg-white w-4/5 max-w-3xl rounded-lg shadow-lg relative flex flex-col"
@@ -8,6 +9,7 @@
       <div
         class="relative h-56 bg-cover bg-center rounded-t-lg"
         :style="{ backgroundImage: `url('${backgroundImage}')` }"
+        @click.stop
       >
         <img
           v-if="pokemonImage"
@@ -19,6 +21,7 @@
             :icon="closeIcon"
              class="absolute top-2 right-2 z-10 !p-0"
              @click="$emit('close')"
+             @click.stop
         />
       </div>
 
@@ -49,11 +52,13 @@
          variant="primary"
          text="Share to my friends"
          :handleClick="copyToClipboard"
+         @click.stop
         />
         <Button 
          :handleClick="()=> addedToFavStore.toggleFavorite(selectedElement)"
          :icon="isFavorite(selectedElement.name) ? starFilledIcon : starIcon"
          class="bg-slate-200"
+         @click.stop
         />
       </div>
     </div>

@@ -22,7 +22,7 @@
         class="flex justify-between items-center px-3 py-2 rounded-md bg-white cursor-pointer"
         @click="openModal(element)"
       >
-        <p class="text-xl capitalize cursor-pointer" >
+        <p class="text-xl capitalize" >
           {{ element.name }}
         </p>
         <Button
