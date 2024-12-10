@@ -68,6 +68,7 @@
 <script>
 import { mapStores } from "pinia";
 import { useAddedToFav } from "../store/addedToFav";
+import { useToast } from "vue-toastification";
 import backgroundImage from "@/assets/background/modal-bg.png";
 import Button from "./Button.vue";
 import starIcon from "@/assets/icons/star-icon.png"
@@ -122,6 +123,7 @@ export default {
         });
     },
     copyToClipboard() {
+      const toast = useToast()
       if (!this.pokemonDetails) {
         console.log("No Pokémon info to share.");
         return;
@@ -132,9 +134,10 @@ export default {
       
       navigator.clipboard.writeText(textToCopy)
         .then(() => {
-          console.log("Copied to clipboard!!!", textToCopy);
+          toast.success('Pokémon copied to clipboard!');
         })
         .catch((error) => {
+            toast.error("Error copying Pokémon to clipboard! ", error)
           console.error("Error copying to clpiboard!:", error);
         });
     },
