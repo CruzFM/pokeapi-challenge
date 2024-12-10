@@ -184,8 +184,9 @@ La navegación fue implementada con `vue-router`, y se utilizaron hooks de naveg
 ---
 
 ## **Futuras Mejoras**
-- Persistencia de datos con LocalStorage o IndexedDB.
-- Paginación para listas largas de Pokémon.
+- Persistencia de datos con LocalStorage.
+- Paginación y Scroll Infinito para listas largas de Pokémon.
+- Evaluar si amerita incorporar nuevas librerías.
 - Mejoras en el código para los componentes `Home`, `Modal`.
 
 ---
