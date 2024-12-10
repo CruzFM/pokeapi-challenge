@@ -1,5 +1,5 @@
 <template>
-  <div class="py-20">
+  <div class="py-20 h-screen">
     <div class="py-20 flex flex-col items-center">
       <div class="relative w-60 h-60 flex justify-center items-center">
         <div

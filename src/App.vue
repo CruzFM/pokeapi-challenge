@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="bg-slate-100">
     <Loading v-if="isLoading" />
     <RouterView v-else />
   </div>
