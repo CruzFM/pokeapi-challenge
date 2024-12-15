@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 export const useAddedToFav = defineStore("addedToFav", {
     state: ()=>{
         return {
-            favorites: []
+            favorites: JSON.parse(localStorage.getItem('favorites')) || []
         }
     },
     actions: {
@@ -14,6 +14,7 @@ export const useAddedToFav = defineStore("addedToFav", {
             } else {
                 this.favorites = [...this.favorites, newPokemon];
             }
+            localStorage.setItem('favorites', JSON.stringify(this.favorites));
         }
     }
 })

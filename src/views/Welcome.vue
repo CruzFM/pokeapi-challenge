@@ -11,7 +11,7 @@
           class="absolute w-full -translate-y-4 top-[9.5px] left-[8px]"
         />
       </div>
-        <div class="flex flex-col items-center justify-between mt-8 space-y-6">
+        <div class="flex flex-col items-center justify-between space-y-6">
         <h1 class="text-[26px] font-semibold">Welcome to Pokédex</h1>
         <p class="w-[315px] text-center mb-20 text-gray-500 font-medium text-lg">
             The digital encyclopedia created by Professor Oak is an invaluable tool to Trainers in the Pokémon world.
